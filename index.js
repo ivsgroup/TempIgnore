@@ -7,8 +7,16 @@ var TempIgnore = new Class({
   ],
 
   ignore_list : [],
-  timeout     : 5000,
   timer       : null,
+  options     : {
+    timeout : 5000
+  }
+
+  initialize : function(options) {
+    var self = this;
+    if (options)
+      self.setOptions(options);
+  },
 
   stack : function(customer_guid) {
     this.ignore_list.push({
@@ -44,7 +52,7 @@ var TempIgnore = new Class({
     if (this.ignore_list.length > 0) {
       this.timer = setInterval(function() {
         var old_entries = Array.filter(self.ignore_list, function(value, key) {
-          return value.datetime + self.timeout < new Date().getTime();
+          return value.datetime + self.options.timeout < new Date().getTime();
         });
         if (old_entries.length > 0)
           self._destack(old_entries[0]);

@@ -1,6 +1,6 @@
 {
-  "name": "TempIgnore",
-  "version": "1.0.0",
+  "name": "temp-ignore",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
