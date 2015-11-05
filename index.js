@@ -62,3 +62,5 @@ var TempIgnore = new Class({
     }
   }
 };
+
+module.exports = TempIgnore;
