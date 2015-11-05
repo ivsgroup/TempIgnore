@@ -10,7 +10,7 @@ var TempIgnore = new Class({
   timer       : null,
   options     : {
     timeout : 5000
-  }
+  },
 
   initialize : function(options) {
     var self = this;
