@@ -18,18 +18,18 @@ var TempIgnore = new Class({
       self.setOptions(options);
   },
 
-  stack : function(customer_guid) {
+  stack : function(key) {
     this.ignore_list.push({
-      'customer_guid' : customer_guid,
+      'key' : key,
       'datetime' : new Date().getTime()
     });
   },
 
-  is_in : function(customer_guid) {
+  is_in : function(key) {
     this.purge_old();
 
-    var matching_entries = Array.filter(this.ignore_list, function(value, key) {
-      return customer_guid == value.customer_guid;
+    var matching_entries = Array.filter(this.ignore_list, function(value, k) {
+      return key == value.key;
     });
 
     var is_in = matching_entries.length > 0;
