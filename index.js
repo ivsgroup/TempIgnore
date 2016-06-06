@@ -1,4 +1,5 @@
-var Class = require('uclass');
+var Class  = require('uclass');
+var filter = require('mout/array/filter');
 
 var TempIgnore = new Class({
 
@@ -28,7 +29,7 @@ var TempIgnore = new Class({
   is_in : function(key) {
     this.purge_old();
 
-    var matching_entries = Array.filter(this.ignore_list, function(value, k) {
+    var matching_entries = filter(this.ignore_list, function(value, k) {
       return key == value.key;
     });
 
@@ -51,7 +52,7 @@ var TempIgnore = new Class({
 
     if (this.ignore_list.length > 0) {
       this.timer = setInterval(function() {
-        var old_entries = Array.filter(self.ignore_list, function(value, key) {
+        var old_entries = filter(self.ignore_list, function(value, key) {
           return value.datetime + self.options.timeout < new Date().getTime();
         });
         if (old_entries.length > 0)
