@@ -1,4 +1,5 @@
 var Class  = require('uclass');
+var remove = require('mout/array/remove');
 var filter = require('mout/array/filter');
 
 var TempIgnore = new Class({
@@ -41,7 +42,7 @@ var TempIgnore = new Class({
   },
 
   _destack : function(entry) {
-    this.ignore_list.erase(entry);
+    remove(this.ignore_list, entry);
   },
 
   purge_old : function() {
