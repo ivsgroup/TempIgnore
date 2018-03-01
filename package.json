@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc index.js",
+    "eslint": "eslint --config=node_modules/ivs-jssc/ivs-browser.eslintrc.js index.js",
+    "checkall": "npm run jscs && npm run eslint"
   },
   "repository": {
     "type": "git",
@@ -22,7 +24,9 @@
   },
   "homepage": "https://github.com/Kalmani/TempIgnore",
   "dependencies": {
-    "mout": "^1.0.0",
-    "uclass": "^2.0.7"
+    "mout": "^1.0.0"
+  },
+  "devDependencies": {
+    "ivs-jssc": "^2.1.3"
   }
 }

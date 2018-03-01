@@ -1,36 +1,32 @@
-var Class  = require('uclass');
-var remove = require('mout/array/remove');
-var filter = require('mout/array/filter');
+"use strict";
 
-var TempIgnore = new Class({
+const remove    = require('mout/array/remove');
+const filter    = require('mout/array/filter');
+const deepMixIn = require('mout/object/deepMixIn');
 
-  Implements : [
-    require('uclass/options')
-  ],
+class TempIgnore {
 
-  ignore_list : [],
-  timer       : null,
-  options     : {
-    timeout : 5000
-  },
+  constructor(options) {
+    this.ignore_list = [];
+    this.timer       = null;
+    this.options     = {
+      timeout : 5000
+    };
 
-  initialize : function(options) {
-    var self = this;
-    if (options)
-      self.setOptions(options);
-  },
+    deepMixIn(this.options, (options || {}));
+  }
 
-  stack : function(key) {
+  stack(key) {
     this.ignore_list.push({
       'key' : key,
       'datetime' : new Date().getTime()
     });
-  },
+  }
 
-  is_in : function(key) {
+  is_in(key) {
     this.purge_old();
 
-    var matching_entries = filter(this.ignore_list, function(value, k) {
+    var matching_entries = filter(this.ignore_list, function(value) {
       return key == value.key;
     });
 
@@ -38,31 +34,30 @@ var TempIgnore = new Class({
     if (is_in)
       this._destack(matching_entries[0]);
 
-    return is_in
-  },
+    return is_in;
+  }
 
-  _destack : function(entry) {
+  _destack(entry) {
     remove(this.ignore_list, entry);
-  },
+  }
 
-  purge_old : function() {
-    var self = this;
-
+  purge_old() {
     if (this.timer)
       clearInterval(this.timer);
 
     if (this.ignore_list.length > 0) {
-      this.timer = setInterval(function() {
-        var old_entries = filter(self.ignore_list, function(value, key) {
-          return value.datetime + self.options.timeout < new Date().getTime();
+      this.timer = setInterval(() => {
+        var old_entries = filter(this.ignore_list, (value) => {
+          return value.datetime + this.options.timeout < new Date().getTime();
         });
         if (old_entries.length > 0)
-          self._destack(old_entries[0]);
-        if (self.ignore_list.length == 0)
-          clearInterval(self.timer);
+          this._destack(old_entries[0]);
+        if (this.ignore_list.length == 0)
+          clearInterval(this.timer);
       }, 1000);
     }
   }
-});
+
+}
 
 module.exports = TempIgnore;
