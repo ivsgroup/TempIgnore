@@ -31,7 +31,7 @@ class TempIgnore {
     });
 
     var is_in = matching_entries.length > 0;
-    if (is_in)
+    if(is_in)
       this._destack(matching_entries[0]);
 
     return is_in;
@@ -42,17 +42,17 @@ class TempIgnore {
   }
 
   purge_old() {
-    if (this.timer)
+    if(this.timer)
       clearInterval(this.timer);
 
-    if (this.ignore_list.length > 0) {
+    if(this.ignore_list.length > 0) {
       this.timer = setInterval(() => {
         var old_entries = filter(this.ignore_list, (value) => {
           return value.datetime + this.options.timeout < new Date().getTime();
         });
-        if (old_entries.length > 0)
+        if(old_entries.length > 0)
           this._destack(old_entries[0]);
-        if (this.ignore_list.length == 0)
+        if(this.ignore_list.length == 0)
           clearInterval(this.timer);
       }, 1000);
     }
